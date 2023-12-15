@@ -4,9 +4,9 @@ REST Countries API with color theme switcher
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](./assets/ss1.png)
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](./assets/ss2.png)
 
 ## Challenge
 
@@ -21,6 +21,6 @@ The challenge was to integrate with the [REST Countries API ](https://www.fronte
 - Click through to the border countries on the detail page
 - Multiple options of theme
 
-## Demo
+<!-- ## Demo
 
-Check out the demo :
+Check out the demo : -->

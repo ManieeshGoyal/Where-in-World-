@@ -1,10 +1,9 @@
 "use strict";
 
-import { renderData as renderNeighbourData, container } from "./theme.js";
-
 const countryDetailsContainer = document.querySelector(
   ".country-details__container"
 );
+const neighbourSection = document.querySelector(".border-section");
 
 const renderCountryData = (data) => {
   const currencies = data?.currencies ? Object.values(data.currencies) : "N/A";
@@ -44,57 +43,36 @@ const renderCountryData = (data) => {
       </div>
   </div>
 </section>
-`;
 
+`;
   countryDetailsContainer.insertAdjacentHTML("beforeend", html);
+
+  if (data.borders) {
+    data.borders.forEach((border) => {
+      const html = `<span class="secondary-btn">${border}</span>`;
+      neighbourSection.insertAdjacentHTML("beforeend", html);
+    });
+  } else {
+    neighbourSection.querySelector("p").innerHTML =
+      "<h3>This country does not share borders with anyone.</h3>";
+  }
 };
 
 const data = JSON.parse(sessionStorage.getItem("data"));
 renderCountryData(data);
 
-// console.log(data.borders);
-
-if (data.borders) {
-  const neighbourData = [];
-
-  data.borders.forEach(async (border) => {
-    const response = await fetch(
-      `https://restcountries.com/v3.1/alpha/${border}`
-    );
-    neighbourData.push(await response.json());
-  });
-  console.log(neighbourData);
-  // iterateCountriesData(neighbourData, "neighbour-card");
-  renderNeighbourData(neighbourData[0], "neighbour-card");
-}
-
-// ! 2 approach
-
-// if (data.borders) {
-//   const neighbourData = [];
-
-//   data.borders.forEach((border) => {
-//     fetch(`https://restcountries.com/v3.1/alpha/${border}`)
-//       .then((res) => res.json())
-//       .then((data) => {
-//         console.log(data);
-//         neighbourData.push(data[0]);
-//       });
-//   });
-//   console.log(neighbourData);
-//   // iterateCountriesData(neighbourData, "neighbour-card");
-//   renderNeighbourData(neighbourData[0], "neighbour-card");
-// }
-
-// ! 3 approach
-
-if (data.borders) {
-  const neighbourData = data.borders.map((border) => {
+neighbourSection.addEventListener("click", (e) => {
+  if (e.target.classList.contains("secondary-btn")) {
+    const border = e.target.textContent;
     fetch(`https://restcountries.com/v3.1/alpha/${border}`)
-      .then((res) => res.json())
-      .then((data) => {
-        return data[0];
+      .then((response) => response.json())
+      .then((obj) => {
+        const [data] = obj;
+        countryDetailsContainer.textContent = "";
+        neighbourSection.textContent = "";
+        console.log(data);
+
+        renderCountryData(data);
       });
-  });
-  console.log(neighbourData);
-}
+  }
+});

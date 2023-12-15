@@ -3,9 +3,11 @@
 .country-details__container {
   width: 90%;
   margin-inline: auto;
-  height: 100vh;
 }
-
+.btn-block{
+  width: 90%;
+  margin:auto;
+}
 .img-section {
   width: 30%;
 }
@@ -36,15 +38,18 @@ p {
   color: var(--quaternary-color);
   margin-bottom: 1.8rem;
 }
+h3{
+  font-size: 2rem;
+}
 
-/* .border-section {
+.border-section {
   width: 70%;
   margin-left: 30%;
-  padding: 2rem 8rem;
+  padding: 2rem 8.5rem;
 }
 span {
   margin: 1.5rem;
-} */
+}
 
 /* Responsive Design */
 
@@ -66,14 +71,14 @@ span {
   .details-section {
     padding-bottom: 0;
   }
-  /* .border-section {
+  .border-section {
     width: 50%;
     margin-left: 50%;
     padding: 2rem 4rem;
   }
   span {
     margin: 0.5rem;
-  } */
+  }
 }
 @media (max-width: 870px) {
   .details-section {
@@ -103,9 +108,9 @@ span {
   .details-section {
     padding-top: 3rem;
   }
-  /* .border-section {
+  .border-section {
     width: 100%;
     margin-left: 0;
     padding: 2rem 4rem;
-  } */
+  }
 }
