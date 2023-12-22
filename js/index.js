@@ -7,20 +7,17 @@ const regionBtn = document.querySelector(".region-btn");
 const regionMenu = document.querySelector(".region-dropdown-menu");
 
 import { body, dropdownOpactiy } from "./component.js";
+// The `renderData` function takes a response from an API call, extracts relevant data, and dynamically
+//generates HTML to display the country's information.
 
-//  * *The `renderData` function takes a response from an API call, extracts relevant data, and dynamically
-//  * *generates HTML to display the country's information.
-
-const renderData = (data, index, style) => {
+const renderData = (data, index) => {
   const currencies = data?.currencies ? Object.values(data.currencies) : "N/A";
   const lang = data?.languages
     ? Object.values(data.languages).join(" , ")
     : "N/A";
   const name = data.name.common;
   const html = `
-<article class=${style}>
-<h2 class="neighbour-text">neighbour country</h2>
-<div class = "country-card" data-index="${index}">
+<article class= "country-card" data-index = "${index}">
 <div class="img-container">
 <img  class="country-img" src="${data.flags.png}" alt = "country-flag" />
 </div>
@@ -42,15 +39,6 @@ const renderData = (data, index, style) => {
   container.insertAdjacentHTML("beforeend", html);
 };
 
-//  * The fetchData function is an asynchronous function that fetches data about a country from a REST
-//  * API and returns the data.
-//  * @param info - The "info" parameter is used to specify the type of information you want to retrieve
-//  * about a country. It can be one of the following values: "name", "alpha", "capital", "currency",
-//  * "language", "callingcode", "region", "subregion", "population", "
-//  * @param about - The "about" parameter specifies the specific information or details you want to
-//  * retrieve about a country.
-//  * @returns The `fetchData` function is returning a promise.
-
 const fetchData = async (info, about) => {
   about = about ? `/${about}` : "";
   const url = `https://restcountries.com/v3.1/${info}${about}`;
@@ -59,62 +47,49 @@ const fetchData = async (info, about) => {
   return data;
 };
 
-// *The code block is defining a function called `iterateCountriesData` that takes an array of country
-// *objects as input. and it return a function that store country data in session storage on card click
+// The code block is defining a function called `iterateCountriesData` that takes an array of country
+// objects as input. and it return a function that store country data in session storage on card click
 
-const iterateCountriesData = (obj, style = "") => {
+const iterateCountriesData = (obj) => {
   let index = 0;
+
   for (let data of obj) {
-    renderData(data, index, style);
+    renderData(data, index);
     index++;
   }
 
   return container.addEventListener("click", (e) => {
     if (e.target == e.currentTarget) return;
-
     const index = e.target.closest(".country-card").getAttribute("data-index");
     const strinifiedObj = JSON.stringify(obj[index]);
     sessionStorage.setItem("data", strinifiedObj);
-    window.location.href = "country_details.html";
+    window.location.href = "countryDetails.html";
   });
 };
 
-//  * The code defines a function that searches for countries based on a search term, fetches data from an
-//  * API, and renders the data on the webpage.
+//The code defines a function that searches for countries based on a search term, fetches data from an
+//API, and renders the data on the webpage.
 
-// TODO:  CHANGE THE FUNCTIONALITY OF searchCountries()
-
-const searchCountries = () => {
+const searchCountry = () => {
   const searchTerm = searchBar.value;
   container.innerHTML = "";
   searchBar.value = "";
   fetchData("name", searchTerm).then((obj) => {
-    const [data] = obj;
-    renderData(data);
-
-    if (!data.borders) return;
-
-    for (let i of data.borders) {
-      fetchData("alpha", i).then((obj) => {
-        const [data] = obj;
-        renderData(data, "neighbour-card");
-      });
-    }
+    localStorage.setItem("data", JSON.stringify(obj));
+    iterateCountriesData(obj);
   });
 };
 
 search.addEventListener("click", () => {
-  if (searchBar.value != " " && searchBar.value != null) searchCountries();
+  if (searchBar.value != " " && searchBar.value != null) searchCountry();
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && e.target.value != "" && e.target.value != null)
-    searchCountries();
+    searchCountry();
 });
 
-//* renderig region by click event and call All rest api on page load
-
-fetchData("all").then((obj) => iterateCountriesData(obj));
+//renderig region by click event and call All rest api on page load
 
 regionBtn.addEventListener("click", () => dropdownOpactiy(regionMenu, 10, 1));
 
@@ -125,12 +100,28 @@ body.addEventListener("click", (e) => {
 });
 
 regionMenu.addEventListener("click", (e) => {
+  sessionStorage.setItem("searchHistory", e.target.textContent);
   container.innerHTML = "";
   regionBtn.textContent = e.target.textContent;
   if (e.target.textContent == "All") {
-    return fetchData("all").then((obj) => iterateCountriesData(obj));
+    return fetchData("all").then((obj) => {
+      localStorage.setItem("data", JSON.stringify(obj));
+      iterateCountriesData(obj);
+    });
   }
-  fetchData("region", e.target.textContent).then((obj) =>
-    iterateCountriesData(obj)
-  );
+  fetchData("region", e.target.textContent).then((obj) => {
+    localStorage.setItem("data", JSON.stringify(obj));
+    iterateCountriesData(obj);
+  });
 });
+
+// If local storage contains data then it will render data from local storage
+// else it will render data from rest api
+
+if (localStorage.getItem("data")) {
+  regionBtn.textContent = sessionStorage.getItem("searchHistory");
+  const obj = JSON.parse(localStorage.getItem("data"));
+  iterateCountriesData(obj);
+} else {
+  fetchData("all").then((obj) => iterateCountriesData(obj));
+}

@@ -86,6 +86,10 @@ body {
   color: var(--quaternary-color);
 }
 /* utility classes */
+.u-hide {
+  display: none;
+}
+
 .u-margin-btm-big {
   margin-bottom: 8rem;
 }
@@ -334,7 +338,7 @@ a {
   flex-wrap: wrap;
   gap: 10rem;
   padding: 5rem;
-  height: 100vh;
+  min-height: 50vh;
 }
 .img-container {
   width: 95%;
@@ -399,26 +403,84 @@ span {
   font-size: 2.5rem;
 }
 
-/* neighbour country card */
+/* loader */
 
-.neighbour-text {
-  font-size: 2rem;
-  text-transform: uppercase;
-  color: var(--quaternary-color);
-  text-shadow: 0px 1rem 1.5rem rgb(0, 0, 0, 0.2);
-  text-align: center;
-  margin-bottom: 1rem;
-  display: none;
-  padding: 2rem;
-  transition: all 0.2s;
+/* 
+.loader {
+  width: 5rem;
+  height: 5rem  ;
+  border-radius: 50%;
+  position:absolute;
+  animation: rotate 1s linear infinite;
+  top:15%;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid var(--tertiary-color);
+  animation: prixClipFix 2s linear infinite;
+}
+.loader::after {
+  border-color: var(--primary-color);
+  animation: prixClipFix 2s linear infinite, rotate 0.5s linear infinite reverse;
+  inset: 8px;
 }
 
-.neighbour-card {
-  transform: scale(0.83);
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-.neighbour-card:hover {
-  transform: scale(0.83) translateY(-2rem);
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+} */
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 50%;
+  }
+  .loader {
+    width: 4.8rem;
+    height: 4.8rem;
+  }
 }
-.neighbour-card .neighbour-text {
-  display: block;
+
+@media (max-width: 425px) {
+  html {
+    font-size: 45%;
+  }
+  .loader {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  html {
+    font-size: 40%;
+  }
 }

@@ -53,7 +53,7 @@ const renderCountryData = (data) => {
       neighbourSection.insertAdjacentHTML("beforeend", html);
     });
   } else {
-    neighbourSection.querySelector("p").innerHTML =
+    neighbourSection.querySelector("h3").innerHTML =
       "<h3>This country does not share borders with anyone.</h3>";
   }
 };

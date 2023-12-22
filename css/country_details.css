@@ -3,10 +3,11 @@
 .country-details__container {
   width: 90%;
   margin-inline: auto;
+  min-height: 50vh;
 }
-.btn-block{
+.btn-block {
   width: 90%;
-  margin:auto;
+  margin: auto;
 }
 .img-section {
   width: 30%;
@@ -38,8 +39,9 @@ p {
   color: var(--quaternary-color);
   margin-bottom: 1.8rem;
 }
-h3{
+h3 {
   font-size: 2rem;
+  color: var(--quaternary-color);
 }
 
 .border-section {
@@ -51,6 +53,11 @@ span {
   margin: 1.5rem;
 }
 
+/* loader */
+
+.loader {
+  position: absolute;
+}
 /* Responsive Design */
 
 @media (max-width: 1200px) {

@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./assets/favicon_io/favicon-32x32.png">
     <title>Where in the World?</title>
     <script src="https://kit.fontawesome.com/9de8e65a42.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/country_details.css">
     <script defer type="module" src="js/component.js"> </script>
-    <script defer  src="js/country_details.js"></script>
+    <script defer  src="js/details.js"></script>
     
 </head>
 
@@ -43,6 +44,7 @@
     </div>
 
     <main class="country-details__container">
+            <span class="loader"></span>
         
         
         <!-- <section class="u-flex">
@@ -72,14 +74,18 @@
             </div>
         </section> -->
     </main>
-    <div class="border-section">
-        <p>Border Sharing Countries: </p>
+   
+    <section class="border-section">
+     
+
+        <h3>Border Sharing Countries: </h3>
 
         <!-- <span class="secondary-btn">Bht</span>
         <span class="secondary-btn">In</span>
         <span class="secondary-btn">Usa</span> -->
 
-    </div>
+    </section>
+
 
 </body>
 
